@@ -34,6 +34,16 @@ Collisions with its own body.
 
 The game ends if the snake collides with the screen borders or itself.
 
+Installation
+
+Clone the repository:
+
+git clone https://github.com/your-username/snake-game.git
+cd snake-game
+
+Ensure you have Python installed on your system (Python 3.6 or higher recommended).
+
+Run the script:
 
 
 Gameplay
