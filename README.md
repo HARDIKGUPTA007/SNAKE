@@ -1,154 +1,84 @@
-import turtle
-import time
-import random
+Overview
 
-delay = 0.1
-score = 0
-high_score = 0
+This repository contains a classic implementation of the Snake Game using Python's turtle module. The game involves controlling a snake to eat food while avoiding collisions with the screen borders or its own body. As the snake consumes food, it grows in size, and the player's score increases. The objective is to achieve the highest score possible.
 
-# Creating a window screen
-wn = turtle.Screen()
-wn.title("Snake Game")
-wn.bgcolor("aqua")
-wn.setup(width=600, height=600)
-wn.tracer(0)
+Features
 
-# head of the snake
-head = turtle.Turtle()
-head.shape("circle")
-head.color("black")
-head.penup()
-head.goto(0, 0)
-head.direction = "Stop"
+Simple Controls: Use W, A, S, and D keys to control the snake's movement.
 
-# food in the game
-food = turtle.Turtle()
-colors = random.choice(['red' , 'yellow'])
-shapes = random.choice(['square', 'circle'])
-food.speed(0)
-food.shape(shapes)
-food.color(colors)
-food.penup()
-food.goto(0, 100)
+Dynamic Gameplay: Snake grows as it eats food, and the game speed increases.
 
-pen = turtle.Turtle()
-pen.speed(0)
-pen.shape("circle")
-pen.color("white")
-pen.penup()
-pen.hideturtle()
-pen.goto(0, 250)
-pen.write("Score : 0 High Score : 0", align="center",
-          font=("candara", 24, "bold"))
+Randomized Elements: Food position, colors, and shapes are randomized for variety.
 
+High Score Tracking: Keeps track of the highest score achieved during the session.
 
-# assigning key directions
-def group():
-    if head.direction != "down":
-        head.direction = "up"
+How to Play
 
+Run the Python script.
 
-def godown():
-    if head.direction != "up":
-        head.direction = "down"
+Use the following keys to control the snake:
 
+W for up
 
-def goleft():
-    if head.direction != "right":
-        head.direction = "left"
+A for left
 
+S for down
 
-def goright():
-    if head.direction != "left":
-        head.direction = "right"
+D for right
 
+Guide the snake to eat the food while avoiding:
 
-def move():
-    if head.direction == "up":
-        y = head.ycor()
-        head.sety(y + 20)
-    if head.direction == "down":
-        y = head.ycor()
-        head.sety(y - 20)
-    if head.direction == "left":
-        x = head.xcor()
-        head.setx(x - 20)
-    if head.direction == "right":
-        x = head.xcor()
-        head.setx(x + 20)
+Collisions with the screen borders.
 
+Collisions with its own body.
 
-wn.listen()
-wn.onkeypress(group, "w")
-wn.onkeypress(godown, "s")
-wn.onkeypress(goleft, "a")
-wn.onkeypress(goright, "d")
+The game ends if the snake collides with the screen borders or itself.
 
-segments = []
+Installation
 
-# Main Gameplay
-while True:
-    wn.update()
-    if head.xcor() > 290 or head.xcor() < -290 or head.ycor() > 290 or head.ycor() < -290:
-        time.sleep(1)
-        head.goto(0, 0)
-        head.direction = "Stop"
-        colors = random.choice(['red', 'blue', 'green'])
-        shapes = random.choice(['square', 'circle'])
-        for segment in segments:
-            segment.goto(1000, 1000)
-        segments.clear()
-        score = 0
-        delay = 0.1
-        pen.clear()
-        pen.write("Score : {} High Score : {} ".format(
-            score, high_score), align="center", font=("candara", 24, "bold"))
-    if head.distance(food) < 20:
-        x = random.randint(-270, 270)
-        y = random.randint(-270, 270)
-        food.goto(x, y)
+Clone the repository:
 
-        # Adding segment
-        new_segment = turtle.Turtle()
-        new_segment.speed(0)
-        new_segment.shape("circle")
-        new_segment.color("black")  # tail colour
-        new_segment.penup()
-        segments.append(new_segment)
-        delay -= 0.001
-        score += 10
-        if score > high_score:
-            high_score = score
-        pen.clear()
-        pen.write("Score : {} High Score : {} ".format(
-            score, high_score), align="center", font=("candara", 24, "bold"))
-    # Checking for head collisions with body segments
-    for index in range(len(segments) - 1, 0, -1):
-        x = segments[index - 1].xcor()
-        y = segments[index - 1].ycor()
-        segments[index].goto(x, y)
-    if len(segments) > 0:
-        x = head.xcor()
-        y = head.ycor()
-        segments[0].goto(x, y)
-    move()
-    for segment in segments:
-        if segment.distance(head) < 20:
-            time.sleep(1)
-            head.goto(0, 0)
-            head.direction = "stop"
-            colors = random.choice(['red', 'blue', 'green'])
-            shapes = random.choice(['square', 'circle'])
-            for segment in segments:
-                segment.goto(1000, 1000)
-            segment.clear()
+git clone https://github.com/your-username/snake-game.git
+cd snake-game
 
-            score = 0
-            delay = 0.1
-            pen.clear()
-            pen.write("Score : {} High Score : {} ".format(
-                score, high_score), align="center", font=("candara", 24, "bold"))
-    time.sleep(delay)
-wn.mainloop()
+Ensure you have Python installed on your system (Python 3.6 or higher recommended).
 
+Run the script:
 
+python snake_game.py
+
+Gameplay
+
+Score: Increases by 10 points for every food item eaten.
+
+High Score: Updates if the current score surpasses the previous high score.
+
+Speed: The snake's speed increases as the score increases, adding a challenging element.
+
+Customization
+
+You can customize various elements of the game:
+
+Screen Dimensions: Modify wn.setup(width, height) to change the game window size.
+
+Snake and Food Colors: Adjust the colors and shapes lists for different visual styles.
+
+Speed: Change the delay variable to alter the initial speed.
+
+Challenges for Advanced Players
+
+Here are a few challenges to enhance your experience:
+
+Add Obstacles: Introduce barriers in the game area that the snake must avoid.
+
+Multiple Levels: Implement levels with increasing difficulty.
+
+Power-Ups: Add special items that temporarily boost the score or slow down the game speed.
+
+Multiplayer Mode: Enable two players to control separate snakes.
+
+Acknowledgments
+
+Python's turtle module for its simplicity in creating graphical applications.
+
+The classic Snake Game concept, which remains a favorite across generation
